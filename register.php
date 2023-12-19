@@ -12,6 +12,7 @@ if (isset($_POST['register'])){
 
     $sql = mysqli_query($conn, "INSERT INTO tb_user VALUES('', '$name', '$email', '$password', '$telephone', '$address')");
 
+    $sqlUserAccount = mysqli_query($conn, "INSERT INTO user values('', '$email', '$password', 'user')");
     if ($sql){
         echo "<script>
                 alert('Registrasi Berhasil');

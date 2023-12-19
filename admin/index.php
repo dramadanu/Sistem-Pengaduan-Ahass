@@ -1,8 +1,6 @@
 <?php
-
-$conn = mysqli_connect("localhost", "root", "", "sistem-service");
-
-$result = mysqli_query($conn, "SELECT * FROM tb_keluhan");
+require "../database.php";
+$result = mysqli_query($conn, "SELECT * FROM tb_complaint");
 
 ?>
 <!DOCTYPE html>
@@ -86,7 +84,7 @@ $result = mysqli_query($conn, "SELECT * FROM tb_keluhan");
                                 Data Pelanggan
                             </div>
                             <div class="card-body">
-                                <table id="datatablesSimple">
+                                <table id="datatablesSimple" class="table">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -101,6 +99,7 @@ $result = mysqli_query($conn, "SELECT * FROM tb_keluhan");
                                             <th>No</th>
                                             <th>Nama</th>
                                             <th>Keluhan</th>
+                                            <th>Keluhan</th>
                                             <th>Photo</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -110,7 +109,17 @@ $result = mysqli_query($conn, "SELECT * FROM tb_keluhan");
                                     <?php while( $row = mysqli_fetch_assoc($result)) : ?>
                                         <tr>
                                             <td><?= $i; ?></td>
-                                            <td><?= $row["name"]; ?></td>
+                                            <td><?php 
+                                            $idUser = $row['id_user'];
+                                            $sqlUser = mysqli_query($conn, "SELECT * FROM user where id = $idUser");
+                                            $fsqlUser = mysqli_fetch_array($sqlUser);
+                                            $email = $fsqlUser['username'];
+                                            $sqlTbUser = mysqli_query($conn, "SELECT * FROM tb_user where email = '$email'");
+                                            $fuser = mysqli_fetch_array($sqlTbUser);
+
+                                            echo $fuser['name'];
+
+                                            ?></td>
                                             <td><?= $row["complaint"]; ?></td>
                                             <td><img src="img/<?= $row["photo"];?>" width="50"></td>
                                             <td><div class="form-button">
